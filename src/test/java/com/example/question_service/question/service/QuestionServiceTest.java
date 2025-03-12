@@ -2,7 +2,7 @@ package com.example.question_service.question.service;
 
 import com.example.question_service.question.dto.QuestionDto;
 import com.example.question_service.question.entity.Question;
-import com.example.question_service.question.entity.Status;
+import com.example.question_service.question.entity.QuestionStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,7 +24,7 @@ class QuestionServiceTest {
     public void init() {
 
         //init data
-        Question question = Question.of("궁금해요", "이것은 무엇인가요?", "작성자", Status.ING);
+        Question question = Question.of("궁금해요", "이것은 무엇인가요?", "작성자", QuestionStatus.ING);
 
         questionService.createQuestion(QuestionDto.from(question));
     }
@@ -34,7 +34,7 @@ class QuestionServiceTest {
     public void createQuestionTest() {
 
         //given
-        Question question = Question.of("질문 제목 입니다.", "질문은 무엇인가요?", "작성자", Status.ING);
+        Question question = Question.of("질문 제목 입니다.", "질문은 무엇인가요?", "작성자", QuestionStatus.ING);
         QuestionDto saveQuestion = questionService.createQuestion(QuestionDto.from(question));
 
         //when

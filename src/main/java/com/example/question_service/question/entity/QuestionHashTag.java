@@ -2,6 +2,7 @@ package com.example.question_service.question.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,11 +24,17 @@ public class QuestionHashTag {
     @JoinColumn(name = "hash_tag_id")
     private HashTag hashTag;
 
+    @Builder
     public QuestionHashTag(Question question, HashTag hashTag) {
         this.question = question;
         this.hashTag = hashTag;
-        question.updateQuestionHashTag(this);
-        hashTag.updateQuestionHashTag(this);
+    }
+
+    public static QuestionHashTag createQuestionHashTag(Question question, HashTag hashTag) {
+        return QuestionHashTag.builder()
+                .question(question)
+                .hashTag(hashTag)
+                .build();
     }
 
     public void updateQuestion(Question question) {

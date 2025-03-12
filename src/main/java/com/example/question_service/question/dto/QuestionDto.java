@@ -1,7 +1,7 @@
 package com.example.question_service.question.dto;
 
 import com.example.question_service.question.entity.Question;
-import com.example.question_service.question.entity.Status;
+import com.example.question_service.question.entity.QuestionStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +17,10 @@ public class QuestionDto {
     private String subject;
     private String content;
     private String author;
-    private Status status;
+    private QuestionStatus status;
     private List<AnswerDto> answers;
 
-    public static QuestionDto from(Long id, String subject, String content, String author, Status status, List<AnswerDto> answers) {
+    public static QuestionDto from(Long id, String subject, String content, String author, QuestionStatus status, List<AnswerDto> answers) {
         return QuestionDto.builder()
                 .id(id)
                 .subject(subject)

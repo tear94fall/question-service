@@ -21,6 +21,7 @@ public class Answer extends BaseEntity {
 
     private String content;
     private String author;
+    private AnswerStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
@@ -28,6 +29,10 @@ public class Answer extends BaseEntity {
 
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
+    public void updateStatus(AnswerStatus status) {
+        this.status = status;
+    }
 
     public void updateQuestion(Question question) {
         this.question = question;
@@ -51,17 +56,17 @@ public class Answer extends BaseEntity {
     }
 
     @Builder
-    public Answer(String content, String author, Question question) {
+    public Answer(String content, String author, AnswerStatus status) {
         this.content = content;
         this.author = author;
-        this.question = question;
+        this.status = status;
     }
 
-    public static Answer createAnswer(String content, String author, Question question) {
+    public static Answer createAnswer(String content, String author, AnswerStatus status) {
         return Answer.builder()
                 .content(content)
                 .author(author)
-                .question(question)
+                .status(status)
                 .build();
     }
 }

@@ -2,10 +2,7 @@ package com.example.question_service.question.entity;
 
 import com.example.question_service.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +26,16 @@ public class HashTag extends BaseEntity {
     public void updateQuestionHashTag(QuestionHashTag questionHashTag) {
         this.questionHashTags.add(questionHashTag);
         questionHashTag.updateHashTag(this);
+    }
+
+    @Builder
+    public HashTag(String name) {
+        this.name = name;
+    }
+
+    public static HashTag createHashTag(String name) {
+        return HashTag.builder()
+                .name(name)
+                .build();
     }
 }

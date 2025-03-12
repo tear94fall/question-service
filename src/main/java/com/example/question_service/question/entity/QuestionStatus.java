@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 @Getter
 @AllArgsConstructor
-public enum Status {
+public enum QuestionStatus {
 
     NEW("new"),
     ING("ing"),
@@ -15,8 +15,8 @@ public enum Status {
 
     private final String status;
 
-    public static Status fromString(String status) {
-        return Arrays.stream(Status.values())
+    public static QuestionStatus fromString(String status) {
+        return Arrays.stream(QuestionStatus.values())
                 .filter(s -> s.getStatus().equals(status))
                 .findAny().orElse(null);
     }

@@ -26,7 +26,7 @@ public class Question extends BaseEntity {
     private String author;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private QuestionStatus status;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Question extends BaseEntity {
         this.content = content;
     }
 
-    public void updateStatus(Status status) {
+    public void updateStatus(QuestionStatus status) {
         this.status = status;
     }
 
@@ -69,14 +69,14 @@ public class Question extends BaseEntity {
     }
 
     @Builder
-    public Question(String subject, String content, String author, Status status) {
+    public Question(String subject, String content, String author, QuestionStatus status) {
         this.subject = subject;
         this.content = content;
         this.author = author;
         this.status = status;
     }
 
-    public static Question of(String subject, String content, String author, Status status) {
+    public static Question of(String subject, String content, String author, QuestionStatus status) {
         return Question.builder()
                 .subject(subject)
                 .content(content)

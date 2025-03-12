@@ -41,17 +41,15 @@ public class Comment extends BaseEntity {
     }
 
     @Builder
-    public Comment(String content, String author, Answer answer) {
+    public Comment(String content, String author) {
         this.content = content;
         this.author = author;
-        this.answer = answer;
     }
 
-    public static Comment createComment(String content, String author, Answer answer) {
+    public static Comment createComment(String content, String author) {
         return Comment.builder()
                 .content(content)
                 .author(author)
-                .answer(answer)
                 .build();
     }
 }
