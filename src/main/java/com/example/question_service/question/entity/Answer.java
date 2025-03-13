@@ -43,6 +43,10 @@ public class Answer extends BaseEntity {
         comment.updateAnswer(this);
     }
 
+    public void updateContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
