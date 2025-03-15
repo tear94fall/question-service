@@ -1,6 +1,6 @@
-package com.example.question_service.question.dto;
+package com.example.question_service.answer.dto;
 
-import com.example.question_service.question.entity.Answer;
+import com.example.question_service.answer.entity.Answer;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

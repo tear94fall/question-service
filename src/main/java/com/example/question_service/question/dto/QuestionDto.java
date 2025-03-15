@@ -1,5 +1,6 @@
 package com.example.question_service.question.dto;
 
+import com.example.question_service.answer.dto.AnswerDto;
 import com.example.question_service.question.entity.Question;
 import com.example.question_service.question.entity.QuestionStatus;
 import lombok.Builder;

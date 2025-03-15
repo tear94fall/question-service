@@ -1,4 +1,4 @@
-package com.example.question_service.question.entity;
+package com.example.question_service.answer.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

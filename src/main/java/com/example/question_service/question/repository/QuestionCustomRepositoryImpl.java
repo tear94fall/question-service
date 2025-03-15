@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-import static com.example.question_service.question.entity.QAnswer.*;
+import static com.example.question_service.answer.entity.QAnswer.answer;
 import static com.example.question_service.question.entity.QHashTag.*;
 import static com.example.question_service.question.entity.QQuestion.*;
 import static com.example.question_service.question.entity.QQuestionHashTag.*;

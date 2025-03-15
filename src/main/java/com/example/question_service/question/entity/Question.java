@@ -1,7 +1,11 @@
 package com.example.question_service.question.entity;
 
+import com.example.question_service.answer.entity.Answer;
 import com.example.question_service.common.entity.BaseEntity;
+import com.example.question_service.question.dto.QuestionCreateDto;
 import com.example.question_service.question.dto.QuestionDto;
+import com.example.question_service.question.dto.QuestionUpdateDto;
+import com.example.question_service.question.dto.QuestionUpdateKey;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,16 +38,17 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionHashTag> questionHashTags = new ArrayList<>();
 
-    public void updateSubject(String subject) {
-        this.subject = subject;
-    }
+    public void updateQuestion(QuestionUpdateDto questionUpdateDto) {
+        QuestionUpdateKey key = QuestionUpdateKey.fromString(questionUpdateDto.getKey());
+        String value = questionUpdateDto.getValue();
 
-    public void updateContent(String content) {
-        this.content = content;
-    }
-
-    public void updateStatus(QuestionStatus status) {
-        this.status = status;
+        if (key.equals(QuestionUpdateKey.SUBJECT)) {
+            this.subject = value;
+        } else if (key.equals(QuestionUpdateKey.CONTENT)) {
+            this.content = value;
+        } else if (key.equals(QuestionUpdateKey.STATUS)) {
+            this.status = QuestionStatus.valueOf(value);
+        }
     }
 
     public void updateAnswer(Answer answer) {
@@ -91,6 +96,15 @@ public class Question extends BaseEntity {
                 .content(questionDto.getContent())
                 .author(questionDto.getAuthor())
                 .status(questionDto.getStatus())
+                .build();
+    }
+
+    public static Question of(QuestionCreateDto questionCreateDto) {
+        return Question.builder()
+                .subject(questionCreateDto.getSubject())
+                .content(questionCreateDto.getContent())
+                .author(questionCreateDto.getAuthor())
+                .status(QuestionStatus.NEW)
                 .build();
     }
 }

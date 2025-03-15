@@ -1,6 +1,11 @@
-package com.example.question_service.question.entity;
+package com.example.question_service.answer.entity;
 
+import com.example.question_service.answer.dto.AnswerCreateDto;
+import com.example.question_service.answer.dto.AnswerUpdateDto;
+import com.example.question_service.answer.dto.AnswerUpdateKey;
 import com.example.question_service.common.entity.BaseEntity;
+import com.example.question_service.question.entity.Comment;
+import com.example.question_service.question.entity.Question;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +26,8 @@ public class Answer extends BaseEntity {
 
     private String content;
     private String author;
+
+    @Enumerated(EnumType.STRING)
     private AnswerStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,6 +36,17 @@ public class Answer extends BaseEntity {
 
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
+    public void updateAnswer(AnswerUpdateDto answerUpdateDto) {
+        AnswerUpdateKey key = AnswerUpdateKey.fromString(answerUpdateDto.getKey());
+        String value = answerUpdateDto.getValue();
+
+        if (key.equals(AnswerUpdateKey.CONTENT)) {
+            this.content = value;
+        } else if (key.equals(AnswerUpdateKey.STATUS)) {
+            this.status = AnswerStatus.valueOf(value);
+        }
+    }
 
     public void updateStatus(AnswerStatus status) {
         this.status = status;
@@ -67,6 +85,14 @@ public class Answer extends BaseEntity {
                 .content(content)
                 .author(author)
                 .status(status)
+                .build();
+    }
+
+    public static Answer createAnswer(AnswerCreateDto answerCreateDto) {
+        return Answer.builder()
+                .content(answerCreateDto.getContent())
+                .author(answerCreateDto.getAuthor())
+                .status(AnswerStatus.NOT_ACCEPTED)
                 .build();
     }
 }

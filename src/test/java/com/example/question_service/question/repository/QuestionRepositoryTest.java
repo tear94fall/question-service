@@ -1,8 +1,13 @@
 package com.example.question_service.question.repository;
 
+import com.example.question_service.answer.entity.Answer;
+import com.example.question_service.answer.entity.AnswerStatus;
 import com.example.question_service.config.TestConfig;
+import com.example.question_service.question.dto.QuestionUpdateDto;
+import com.example.question_service.question.dto.QuestionUpdateKey;
 import com.example.question_service.question.entity.*;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -90,6 +95,76 @@ class QuestionRepositoryTest {
         em.clear();
 
         assertEquals(quest.getSubject(), save.getSubject());
+    }
+
+    @Test
+    @DisplayName("질문 제목 수정 테스트")
+    public void updateQuestionSubjectTest() {
+
+        //given
+        Question quest = questionRepository.save(Question.of("질문 제목 입니다.", "질문은 무엇인가요?", "작성자", QuestionStatus.ING));
+        String subject = quest.getSubject();
+
+        //when
+        String string = QuestionUpdateKey.SUBJECT.toString();
+
+        log.info("string : {}", string);
+
+        quest.updateQuestion(QuestionUpdateDto.from(QuestionUpdateKey.SUBJECT.getKey() ,"질문 제목"));
+        questionRepository.save(quest);
+
+        //then
+        em.flush();
+        em.clear();
+
+        Question findQuestion = questionRepository.findById(quest.getId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        assertNotEquals(subject, findQuestion.getSubject());
+    }
+
+    @Test
+    @DisplayName("질문 내용 수정 테스트")
+    public void updateQuestionContentTest() {
+
+        //given
+        Question quest = questionRepository.save(Question.of("질문 제목 입니다.", "질문은 무엇인가요?", "작성자", QuestionStatus.ING));
+        String content = quest.getContent();
+
+        //when
+        quest.updateQuestion(QuestionUpdateDto.from(QuestionUpdateKey.CONTENT.getKey(), "질문 내용"));
+        questionRepository.save(quest);
+
+        //then
+        em.flush();
+        em.clear();
+
+        Question findQuestion = questionRepository.findById(quest.getId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        assertNotEquals(content, findQuestion.getContent());
+    }
+
+    @Test
+    @DisplayName("질문 상태 수정 테스트")
+    public void updateQuestionStatusTest() {
+
+        //given
+        Question quest = questionRepository.save(Question.of("질문 제목 입니다.", "질문은 무엇인가요?", "작성자", QuestionStatus.ING));
+        QuestionStatus status = quest.getStatus();
+
+        //when
+        quest.updateQuestion(QuestionUpdateDto.from(QuestionUpdateKey.STATUS.getKey(), QuestionStatus.DONE.toString()));
+        questionRepository.save(quest);
+
+        //then
+        em.flush();
+        em.clear();
+
+        Question findQuestion = questionRepository.findById(quest.getId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        assertNotEquals(status, findQuestion.getStatus());
     }
 
     @Test

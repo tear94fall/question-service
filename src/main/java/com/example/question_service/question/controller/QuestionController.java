@@ -1,7 +1,10 @@
 package com.example.question_service.question.controller;
 
+import com.example.question_service.question.dto.QuestionCreateDto;
 import com.example.question_service.question.dto.QuestionDto;
+import com.example.question_service.question.dto.QuestionUpdateDto;
 import com.example.question_service.question.service.QuestionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +21,14 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.getQuestion(id));
     }
 
-    @PostMapping()
-    public ResponseEntity<QuestionDto> createQuestion(@RequestBody QuestionDto questionDto) {
-        return ResponseEntity.ok(questionService.createQuestion(questionDto));
+    @PostMapping
+    public ResponseEntity<QuestionDto> createQuestion(@Valid @RequestBody QuestionCreateDto questionCreateDto) {
+        return ResponseEntity.ok(questionService.createQuestion(questionCreateDto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<QuestionDto> updateQuestion(@PathVariable("id") Long id, @RequestBody QuestionDto questionDto) {
-        return ResponseEntity.ok(questionService.updateQuestion(id, questionDto));
+    @PutMapping
+    public ResponseEntity<QuestionDto> updateQuestion(@Valid @RequestBody QuestionUpdateDto questionUpdateDto) {
+        return ResponseEntity.ok(questionService.updateQuestion(questionUpdateDto));
     }
 
     @DeleteMapping("/{id}")

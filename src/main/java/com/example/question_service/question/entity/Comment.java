@@ -1,5 +1,6 @@
 package com.example.question_service.question.entity;
 
+import com.example.question_service.answer.entity.Answer;
 import com.example.question_service.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
